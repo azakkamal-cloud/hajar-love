@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fffafc;
+}
+
+.hero-section {
+  height: 100vh;
+  background: linear-gradient(rgba(220, 53, 69, 0.6), rgba(220, 53, 69, 0.6)),
+              url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.card img {
+  height: 250px;
+  object-fit: cover;
+}
+
+footer {
+  font-size: 16px;
+}
+.media-fixed{
+    height:250px;
+    object-fit:cover;
+}
