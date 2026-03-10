@@ -64,56 +64,46 @@
     <div class="container">
       <h2 class="text-center text-danger fw-bold mb-4">Galerie</h2>
       <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-4 animate-on-scroll">
           <div class="card shadow-sm border-0 rounded-4">
-            <img src="Image/WhatsApp Image 2026-03-08 at 16.00.31 (1).jpeg"class="card-img-top rounded-top-4" alt="flower">
+            <img src="Image/WhatsApp Image 2026-03-08 at 16.00.31 (1).jpeg" class="card-img-top rounded-top-4" alt="flower">
             <div class="card-body text-center">
               <p class="card-text">MY Baby👧</p>
             </div>
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4 animate-on-scroll">
           <div class="card shadow-sm border-0 rounded-4">
-             <video class="card-img-top media-fixed" controls>
-  <source src="Vido/WhatsApp Video 2026-03-08 at 16.18.15.mp4" type="video/mp4">
-</video>
-
-    <div class="card-body text-center">
-      <p class="card-text">Notre moment spécial ❤️</p>
-           
+            <video class="card-img-top media-fixed" controls>
+              <source src="Vido/WhatsApp Video 2026-03-08 at 16.18.15.mp4" type="video/mp4" />
+            </video>
+            <div class="card-body text-center">
+              <p class="card-text">Notre moment spécial ❤️</p>
             </div>
           </div>
         </div>
 
-        <div class="col-md-4">
-  <div class="card shadow border-0 rounded-4">
-     <img src="Image/WhatsApp Image 2026-03-08 at 16.00.32.jpeg">
+        <div class="col-md-4 animate-on-scroll">
+          <div class="card shadow border-0 rounded-4">
+            <img src="Image/WhatsApp Image 2026-03-08 at 16.00.32.jpeg" class="card-img-top rounded-top-4" alt="moment">
             <div class="card-body text-center">
               <p class="card-text">Un beau moment 🌹</p>
-
-   
-
-   
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4">
-  <div class="card shadow-sm border-0 rounded-4">
-
-    
-
-  </div>
-</div>
-
-  </div>
-</div>
   </section>
 
   <!-- Button Section -->
   <section class="py-5 text-center">
     <div class="container">
-      <button class="btn btn-danger btn-lg px-4" onclick="showMessage()">
-        Clique ici ❤️
-      </button>
+      <div class="button-container d-inline-block position-relative">
+        <button id="clickHeartButton" class="btn btn-danger btn-lg px-4" onclick="showMessage()">
+          Clique ici ❤️
+        </button>
+      </div>
       <p id="specialMessage" class="mt-4 fs-4 text-danger fw-bold"></p>
     </div>
   </section>
@@ -130,10 +120,84 @@
 
   <!-- JS -->
   <script>
+    let clickCount = 0;
+
+    const targetClickCount = 2;
+
     function showMessage() {
-      document.getElementById("specialMessage").innerText =
-        "Hajar,  You are my baby, my love, my best friend, my future wife, and my everything. tu es vraiment spéciale 🌹❤️";
+      clickCount += 1;
+      const messageEl = document.getElementById("specialMessage");
+
+      if (clickCount >= targetClickCount) {
+        window.location.href = "congrats.html";
+      } else {
+        messageEl.innerText =
+          `Tu as cliqué ${clickCount} fois. Encore ${targetClickCount - clickCount} pour le grand coeur !`;
+      }
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.25,
+        }
+      );
+
+      document.querySelectorAll(".animate-on-scroll").forEach((element) => {
+        observer.observe(element);
+      });
+
+      const heartButton = document.getElementById("clickHeartButton");
+
+      function moveButtonRandomly() {
+        const rect = document.body.getBoundingClientRect();
+        const buttonRect = heartButton.getBoundingClientRect();
+
+        const margin = 15;
+        const maxX = rect.width - buttonRect.width - margin;
+        const maxY = window.innerHeight - buttonRect.height - margin;
+
+        const randomX = Math.floor(Math.random() * (maxX + 1));
+        const randomY = Math.floor(Math.random() * (maxY + 1));
+
+        heartButton.style.transition = "transform 0.02s ease";
+        heartButton.style.position = "fixed";
+        heartButton.style.left = `${randomX}px`;
+        heartButton.style.top = `${randomY}px`;
+      }
+
+      function avoidCursor(event) {
+        const buttonRect = heartButton.getBoundingClientRect();
+        const centerX = buttonRect.left + buttonRect.width / 2;
+        const centerY = buttonRect.top + buttonRect.height / 2;
+        const dx = event.clientX - centerX;
+        const dy = event.clientY - centerY;
+        const distance = Math.hypot(dx, dy);
+        const safeDistance = Math.max(buttonRect.width, buttonRect.height) * 1.3;
+
+        if (distance < safeDistance) {
+          moveButtonRandomly();
+        }
+      }
+
+      heartButton.addEventListener("click", (event) => {
+        heartButton.classList.remove("btn-click-animated");
+        void heartButton.offsetWidth; // restart animation
+        heartButton.classList.add("btn-click-animated");
+        avoidCursor(event);
+      });
+
+      container.addEventListener("mousemove", avoidCursor);
+      heartButton.addEventListener("mouseenter", moveButtonRandomly);
+    });
   </script>
 </body>
 </html>
