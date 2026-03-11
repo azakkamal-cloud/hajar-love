@@ -103,10 +103,27 @@
         <button id="clickHeartButton" class="btn btn-danger btn-lg px-4" onclick="showMessage()">
           Clique ici ❤️
         </button>
+        <button id="openSnakeBtn" class="btn btn-outline-warning btn-lg ms-2 px-4" onclick="openSnakeGame()">
+          Jouer à Snake
+        </button>
       </div>
       <p id="specialMessage" class="mt-4 fs-4 text-danger fw-bold"></p>
     </div>
   </section>
+
+  <div id="snakeOverlay" class="snake-overlay" role="dialog" aria-modal="true" aria-label="Jeu snake">
+    <div class="snake-box">
+      <h3>Snake classique</h3>
+      <canvas id="snakeCanvas" width="400" height="400"></canvas>
+      <div class="snake-score" id="snakeScore">Score: 0</div>
+      <div class="snake-controls">
+        <button class="btn btn-primary btn-sm" onclick="startSnake()">Démarrer</button>
+        <button class="btn btn-secondary btn-sm" onclick="pauseSnake()">Pause</button>
+        <button class="btn btn-danger btn-sm" onclick="closeSnakeGame()">Fermer</button>
+      </div>
+      <p class="mt-2 small text-muted">Directions: flèches ou Z,Q,S,D</p>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-danger text-white text-center py-3">
