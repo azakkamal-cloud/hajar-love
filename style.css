@@ -184,5 +184,14 @@ footer {
   margin-top: 0.55rem;
   font-weight: 700;
   color: #d63384;
+  font-size: 1.1rem;
+}
+
+.snake-status {
+  margin-top: 0.45rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #198754;
+  text-shadow: 0 0 4px rgba(0,0,0,0.3);
 }
 
